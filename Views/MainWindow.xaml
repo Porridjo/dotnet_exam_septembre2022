@@ -1,0 +1,59 @@
+﻿<Window x:Class="ExamSeptembre2022.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExamSeptembre2022"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="listboxTemplate">
+            <StackPanel Orientation="Horizontal">
+                <!-- id du produit -->
+                <TextBlock Text="{Binding ProductId}"/>
+                <!-- nom du produit -->
+                <TextBlock Text="{Binding ProductNameListBox}"/>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="saleslistboxTemplate">
+            <StackPanel Orientation="Horizontal">
+              
+                <TextBlock Text="{Binding ProductId}"/>
+                <TextBlock Text=" : " Margin="2"/>
+                <TextBlock Text="{Binding Total}"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="204*"/>
+                <ColumnDefinition Width="251*"/>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="productList" Grid.Row="0" Grid.Column="0" ItemsSource="{Binding ProductList}" ItemTemplate="{StaticResource listboxTemplate}" SelectedItem="{Binding SelectedProduct}" Height="150" Width="200"/>
+            <ListBox x:Name="salesList" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding SalesList}" ItemTemplate="{StaticResource saleslistboxTemplate}" Height="150" Width="200"/>
+            
+        </Grid>
+        <Grid Grid.Row="1">
+            <Label Content="ProductId" HorizontalAlignment="Left" Margin="51,20,0,0" VerticalAlignment="Top"/>
+            <Label Content="ProductName" HorizontalAlignment="Left" Margin="51,50,0,0" VerticalAlignment="Top"/>
+            <Label Content="SupplierContactName" HorizontalAlignment="Left" Margin="51,80,0,0" VerticalAlignment="Top"/>
+            <Label Content="QuantityPerUnit" HorizontalAlignment="Left" Margin="51,110,0,0" VerticalAlignment="Top"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="200,20,0,0" TextWrapping="Wrap" Text="{Binding ProductId,Mode=OneWay}" 
+             DataContext="{Binding SelectedItem,ElementName=productList}" VerticalAlignment="Top" Width="200" IsReadOnly="True"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="200,50,0,0" TextWrapping="Wrap" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" 
+             DataContext="{Binding SelectedItem,ElementName=productList}" VerticalAlignment="Top" Width="200"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="200,80,0,0" TextWrapping="Wrap" Text="{Binding SupplierContactName, Mode=OneWay}" 
+             DataContext="{Binding SelectedItem,ElementName=productList}" VerticalAlignment="Top" Width="200" IsReadOnly="True"/>
+            <TextBox HorizontalAlignment="Left" Height="23" Margin="200,110,0,0" TextWrapping="Wrap" Text="{Binding QuantityPerUnit}" 
+            DataContext="{Binding SelectedItem,ElementName=productList}" VerticalAlignment="Top" Width="200"/>
+            <Button Command ="{Binding SaveCommand}" Content="Save" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="51,150,0,0"/>
+        </Grid>
+        
+
+    </Grid>
+</Window>
